@@ -1,0 +1,6 @@
+namespace: fireplace
+bases:
+  - ../base
+  - config.yaml
+  - pvc.yaml
+  - ingress.yaml

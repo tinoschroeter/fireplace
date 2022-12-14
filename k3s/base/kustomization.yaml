@@ -1,0 +1,4 @@
+namespace: fireplace
+resources:
+  - service.yml
+  - app.yaml

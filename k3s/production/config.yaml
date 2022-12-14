@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fireplace-config
+  namespace: fireplace
+data:
+  FOLDER: "/opt"

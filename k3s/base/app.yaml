@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fireplace-backend
+  name: fireplace-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fireplace-backend
+  template:
+    metadata:
+      labels:
+        app: fireplace-backend
+    spec:
+      containers:
+      - name: fireplace-backend
+        image: registry.tino.sh/fireplace-app
+        volumeMounts:
+        - name: movie-file
+          mountPath: /opt
+        env:
+          - name: FOLDER
+            valueFrom:
+              configMapKeyRef:
+                name: fireplace-config
+                key: FOLDER
+        resources:
+          requests:
+            memory: "120Mi"
+            cpu: "200m"
+          limits:
+            memory: "200Mi"
+            cpu: "300m"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 2
+          periodSeconds: 30
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 20
+          failureThreshold: 2
+      volumes:
+      - name: movie-file
+        persistentVolumeClaim:
+          claimName: pvc-fireplace

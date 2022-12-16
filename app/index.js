@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const youtubeID = "Ux8xAuQBdkk";
 const folder = process.env.FOLDER || "./video/";
-const downloadReady = false;
+let downloadReady = false;
 const port = process.env.PORT || 3000;
 let download = "";
 
@@ -12,6 +12,7 @@ const express = require("express");
 const app = express();
 
 app.set("view engine", "ejs");
+app.use(express.static(folder));
 
 if (!fs.existsSync(`${folder}/fireplace.mp4`)) {
   console.log("Datei existiert nicht");
@@ -25,7 +26,6 @@ if (!fs.existsSync(`${folder}/fireplace.mp4`)) {
       `${folder}/fireplace.%(ext)s`,
     ])
     .on("progress", (progress) => {
-
       download = progress;
       console.log(
         progress.percent,

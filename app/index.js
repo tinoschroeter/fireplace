@@ -21,7 +21,7 @@ if (!fs.existsSync(`${folder}/fireplace.mp4`)) {
     .exec([
       `https://www.youtube.com/watch?v=${youtubeID}`,
       "-f",
-      "best",
+      "136",
       "-o",
       `${folder}/fireplace.%(ext)s`,
     ])
